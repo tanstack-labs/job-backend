@@ -1,17 +1,5 @@
 import { Job } from "../models/job.model.js";
 
-export const getJobByIdService = async (id) => {
-  // ⏳ Artificial delay (IMPORTANT for frontend later)
-  await new Promise((res) => setTimeout(res, 800));
-  const job = await Job.findById(id);
-
-  if (!job) {
-    throw new Error("Job not found");
-  }
-
-  return job;
-};
-
 export const getJobsService = async (query) => {
   const {
     page = 1,
@@ -62,4 +50,16 @@ export const getJobsService = async (query) => {
     page: Number(page),
     pages: Math.ceil(total / limit),
   };
+};
+
+export const getJobByIdService = async (id) => {
+  // ⏳ Artificial delay (IMPORTANT for frontend later)
+  await new Promise((res) => setTimeout(res, 800));
+  const job = await Job.findById(id);
+
+  if (!job) {
+    throw new Error("Job not found");
+  }
+
+  return job;
 };
