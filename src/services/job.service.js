@@ -1,4 +1,5 @@
 import { Job } from "../models/job.model.js";
+import AppError from "../utils/AppError.js";
 
 export const getJobsService = async (query) => {
   const {
@@ -59,6 +60,35 @@ export const getJobByIdService = async (id) => {
 
   if (!job) {
     throw new Error("Job not found");
+  }
+
+  return job;
+};
+
+export const createJobService = async (jobData) => {
+  const job = await Job.create(jobData);
+
+  return job;
+};
+
+export const updateJobService = async (id, data) => {
+  const job = await Job.findByIdAndUpdate(id, data, {
+    new: true,
+    runValidators: true,
+  });
+
+  if (!job) {
+    throw new AppError("Job not found", 404);
+  }
+
+  return job;
+};
+
+export const deleteJobService = async (id) => {
+  const job = await Job.findByIdAndDelete(id);
+
+  if (!job) {
+    throw new AppError("Job not found", 404);
   }
 
   return job;
